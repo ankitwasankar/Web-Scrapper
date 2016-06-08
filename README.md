@@ -5,7 +5,7 @@ Web Scrapper developed in python for extracting link (specified by user like .mp
 1. Copy app folder- **web_scrapper** to your project directory
 2. If you want demo examples, you can copy folder- **demo_examples** to your project directory
 3. Add above apps to *INSTALLED_APPS* in settings.py file of your project.
-```python
+4. ```python
 INSTALLED_APPS = (
      ........
      'web_scrapper',
