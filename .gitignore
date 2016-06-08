@@ -1,0 +1,4 @@
+*.pyc
+migrations/
+mysite/
+manage.py
