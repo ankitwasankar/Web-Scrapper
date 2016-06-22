@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Web Scrapper Demo">
+    <meta name="author" content="Ankit Wasankar">
+
+    <title>Web Scrapper Demo</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- custom style will go here -->
+    <style type="text/css">
+        .margin-bottom{
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 class="margin-bottom">Enter following details to start scrapping:</h3>
+        <form method="post" action="" class="col-md-5">{%csrf_token%}
+            <!-- form validation -->
+            {% ifequal flag "success" %}
+                <div class="alert alert-success">{{msg}}</div>
+            {% endifequal %}
+            {% ifequal flag "failed" %}
+                <div class="alert alert-danger">{{msg}}</div>
+            {% endifequal %}
+            <!-- /form validation -->
+            <label for="inputURL">1. Website URL</label>
+            <input type="text" name="url" class="form-control margin-bottom" placeholder="http://wwww.MyTechBlog.in/" required autofocus>
+            <label for="inputDepth">2. Depth</label>
+            <input type="text" name="depth" class="form-control margin-bottom" placeholder="6" required>
+            <div class="checkbox margin-bottom">
+                <label>
+                    <input type="checkbox" name="domain" value="True" checked> Search only within given domain
+                </label>
+            </div>
+            <button class="btn btn-lg btn-success btn-block" type="submit">Start Scrapper</button>
+        </form>
+    </div> <!-- /container -->      
+</body>
+</html>
