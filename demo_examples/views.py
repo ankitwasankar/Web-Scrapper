@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from web_scrapper import spider
 from . import utils
 
 
@@ -26,8 +27,8 @@ def home(request):
         if flag:
             # if validation returns true
             msg = "Spider started crawling webpages!"
-            # call the start_spider method here--
-            # code yet to add..
+            # call and start spider crawl method
+            spider.crawl(url, domain, depth)
             context = {
                 "msg": msg,
                 "flag": "success",
