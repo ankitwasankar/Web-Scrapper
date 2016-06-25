@@ -11,9 +11,10 @@ domain = False
 host = ""
 visited = []
 fetched = []
+format_list = []
 
 
-def crawl(url_param, depth_param, domain_param):
+def crawl(url_param, depth_param, domain_param, format_list_param):
     """
     initialize spider and start crawling
     url - site url to crawl
@@ -26,12 +27,14 @@ def crawl(url_param, depth_param, domain_param):
     global host
     global visited
     global fetched
+    global format_list
     # initialize spider code here
     url = correct_url(url_param)
     depth = int(depth_param)
     domain = bool(domain_param)
     host = get_host(url)
     visited.append(url)
+    format_list = format_list_param
     # start crawler code here
     flag = start_fetching()
     return flag
@@ -63,8 +66,10 @@ def start_fetching():
     global host
     global visited
     global fetched
+    global format_list
     # start the fetching
     for url in visited:
+        print "Downloading = " + str(url)
         # try fetching the url now
         try:
             request = urllib2.Request(
@@ -85,7 +90,11 @@ def start_fetching():
                     corrected_link = urlparse.urljoin(url, fetched_link)
                     if corrected_link not in visited:
                         visited.append(corrected_link)
-                        print corrected_link
+                        print "visited = " + str(corrected_link)
+                        # If it has required filetype add it to fetched
+                        if corrected_link.endswith(tuple(format_list)):
+                            fetched.append(corrected_link)
+                            print "Fetched = " + str(corrected_link)
         except Exception as e:
             pass
     # Simply returning true without analysis

@@ -21,14 +21,18 @@ def home(request):
         url = request.POST.get('url')
         depth = request.POST.get('depth')
         domain = True if request.POST.get('domain') else False
+        formats = request.POST.get('formats')
         # validate the inputs from user
-        flag = utils.validate_params(url, depth, domain)
+        flag = utils.validate_params(url, depth, domain, formats)
+        format_list = formats.split(',')
+        print format_list
+        print ".mp3".endswith(tuple(format_list))
         # check validation
         if flag:
             # if validation returns true
             msg = "Spider started crawling webpages!"
             # call and start spider crawl method
-            spider.crawl(url, domain, depth)
+            spider.crawl(url, domain, depth, format_list)
             context = {
                 "msg": msg,
                 "flag": "success",
