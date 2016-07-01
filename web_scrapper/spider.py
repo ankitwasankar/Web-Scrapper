@@ -2,7 +2,7 @@ import urllib2
 import urlparse
 
 import BeautifulSoup
-from django.conf import settings
+import requests
 
 # defining global variables
 url = ""
@@ -69,19 +69,31 @@ def start_fetching():
     global format_list
     # start the fetching
     for url in visited:
-        print "Downloading = " + str(url)
+        # Check if URL is HTML or not
+        try:
+            r = requests.head(url)
+            if "text/html" not in r.headers["content-type"]:
+                continue
+        except Exception as e:
+            print "Exception 1"
+            continue
+
         # try fetching the url now
         try:
             request = urllib2.Request(
                 url, headers={'User-Agent': 'Mozilla/5.0'})
             response = urllib2.urlopen(request)
         except Exception as e:
-            pass
+            print "Exception 2"
+            continue
+
         # Parsing the HTML content of URL
         try:
             soup = BeautifulSoup.BeautifulSoup(response)
         except Exception as e:
-            pass
+            print "Exception 3"
+            continue
+
         # find all the urls that is in anchor tag
         try:
             for a in soup.findAll('a'):
@@ -95,7 +107,10 @@ def start_fetching():
                         if corrected_link.endswith(tuple(format_list)):
                             fetched.append(corrected_link)
                             print "Fetched = " + str(corrected_link)
+
         except Exception as e:
-            pass
+            print "Exception 4"
+            continue
+
     # Simply returning true without analysis
     return True
